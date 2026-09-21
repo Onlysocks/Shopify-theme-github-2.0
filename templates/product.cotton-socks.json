@@ -1,0 +1,234 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "body"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "rating": {
+          "type": "rating",
+          "disabled": true,
+          "settings": {}
+        },
+        "inventory_4XaCm4": {
+          "type": "inventory",
+          "disabled": true,
+          "settings": {
+            "text_style": "body",
+            "inventory_threshold": 10,
+            "show_inventory_quantity": true
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "amai_preorder_manager_notify_preorder_button_block_bTQ863": {
+          "type": "shopify://apps/amai-preorder-manager-notify/blocks/preorder-button-block/7053ce2a-18da-4e24-98b3-3fdd20b313e7",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "collapsible_tab_chPRQM": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "WHY CHOOSE ONLY SOCKS",
+            "icon": "question_mark",
+            "content": "<ul><li>Made in Australia</li><li>Targeted cushioning on the foot, toe and heel</li><li>Vented for breathability</li><li>Arch support</li><li>Available in tailored sizes</li></ul>",
+            "page": ""
+          }
+        },
+        "collapsible_tab_4nWpXL": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "MATERIALS & CARE",
+            "icon": "washing",
+            "content": "<ul><li>80% Australian Cotton,20% Spandex</li></ul><p><strong>CARE INSTRUCTIONS:</strong></p><ul><li>These socks are machine washable. We recommend that you wash before wearing them. Please wash and care for them as per the care instructions on the packaging.</li></ul>",
+            "page": ""
+          }
+        },
+        "collapsible_tab_tDPL3D": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "RECCOMENDED FOR THESE INDUSTRIES",
+            "icon": "clipboard",
+            "content": "<p>Our work socks provide comfort and durability across a wide range of demanding industries. Designed to withstand the toughest conditions, offering essential protection, ensuring you stay safe while on the job.</p><p>This product is suitable for:<br/></p><ul><li>Building & Construction</li><li>Electrical</li><li>Government_Council</li><li>Hospitality</li><li>Landscaping and Gardening</li><li>Mechanics</li><li>Plumbers</li><li>Warehouse & Logistics</li></ul>",
+            "page": ""
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        },
+        "onlysocks_bundle_t8WtaF": {
+          "type": "onlysocks_bundle",
+          "settings": {
+            "collection": "test-collection",
+            "checkout_ready": true,
+            "heading": "Build your sock bundle",
+            "color_scheme": "background-1",
+            "t1_title": "Choose 1–4 pairs",
+            "t1_paid": 4,
+            "t1_free": 0,
+            "t1_percent": 0,
+            "t1_value": false,
+            "t1_shipping": false,
+            "t2_title": "5 + 1 free",
+            "t2_paid": 5,
+            "t2_free": 1,
+            "t2_percent": 15,
+            "t2_value": true,
+            "t2_shipping": true,
+            "t3_title": "7 + 2 free",
+            "t3_paid": 7,
+            "t3_free": 2,
+            "t3_percent": 20,
+            "t3_value": false,
+            "t3_shipping": true,
+            "choose_style": "Choose your favourite style",
+            "choose_option": "Choose {option}",
+            "pair_text": "Pair {number}",
+            "free_text": "Free pair",
+            "discount_text": "{percent}% off paid pairs",
+            "value_text": "Best value",
+            "shipping_text": "Free delivery",
+            "each_text": "per pair",
+            "remove_text": "Remove pair",
+            "sold_out": "Sold out",
+            "size_error": "Error size not found",
+            "add_text": "Add to cart",
+            "adding_text": "Adding your socks…",
+            "incomplete_price": "Choose styles and sizes",
+            "selection_text": "Choose a size for every selected pair. Complete all slots in a fixed bundle.",
+            "ready_text": "Your cheapest eligible pairs are highlighted automatically.",
+            "empty_text": "No socks available in this collection yet.",
+            "setup_text": "Bundle ordering is coming soon.",
+            "cart_error": "We could not add your socks. Please try again.",
+            "no_js": "Please enable JavaScript to build your bundle.",
+            "cart_note": "Bundle estimate. Discounts are calculated in your cart; other items or offers may change the final savings.",
+            "heading_font": "heading",
+            "badge_font": "heading",
+            "badge_size": 11,
+            "radius": 4,
+            "accent": "#203c35",
+            "border": "#d5dad6",
+            "heading_bg": "#203c35",
+            "heading_fg": "#ffffff",
+            "button_bg": "#203c35",
+            "button_fg": "#ffffff",
+            "value_bg": "#203c35",
+            "value_fg": "#ffffff",
+            "discount_bg": "#eff4ef",
+            "discount_fg": "#203c35",
+            "shipping_bg": "#eff4ef",
+            "shipping_fg": "#203c35",
+            "free_bg": "#eff4ef",
+            "free_fg": "#203c35",
+            "free_border": "#d0e4cb",
+            "error_color": "#b42318"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "rating",
+        "inventory_4XaCm4",
+        "onlysocks_bundle_t8WtaF",
+        "price",
+        "variant_picker",
+        "quantity_selector",
+        "amai_preorder_manager_notify_preorder_button_block_bTQ863",
+        "buy_buttons",
+        "description",
+        "collapsible_tab_chPRQM",
+        "collapsible_tab_4nWpXL",
+        "collapsible_tab_tDPL3D",
+        "share"
+      ],
+      "settings": {
+        "enable_sticky_info": false,
+        "color_scheme": "accent-2",
+        "media_size": "small",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "mobile_thumbnails": "hide",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "color_scheme": "accent-2",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "columns_mobile": "2",
+        "padding_top": 0,
+        "padding_bottom": 60
+      }
+    },
+    "16975054030b596ba1": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_PzfkNg": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_PzfkNg"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products",
+    "16975054030b596ba1"
+  ]
+}

@@ -1,0 +1,41 @@
+{{ 'onlysocks-bundle.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'onlysocks-bundle-pricing.js' | asset_url }}" defer></script>
+<script src="{{ 'onlysocks-bundle.js' | asset_url }}" defer></script>
+{%- assign s = block.settings -%}
+<onlysocks-bundle class="color-{{ s.color_scheme }} gradient" {{ block.shopify_attributes }}
+  style="--osb-accent:{{ s.accent }};--osb-border:{{ s.border }};--osb-radius:{{ s.radius }}px;--osb-heading-bg:{{ s.heading_bg }};--osb-heading-fg:{{ s.heading_fg }};--osb-button-bg:{{ s.button_bg }};--osb-button-fg:{{ s.button_fg }};--osb-value-bg:{{ s.value_bg }};--osb-value-fg:{{ s.value_fg }};--osb-discount-bg:{{ s.discount_bg }};--osb-discount-fg:{{ s.discount_fg }};--osb-shipping-bg:{{ s.shipping_bg }};--osb-shipping-fg:{{ s.shipping_fg }};--osb-free-bg:{{ s.free_bg }};--osb-free-fg:{{ s.free_fg }};--osb-free-border:{{ s.free_border }};--osb-error:{{ s.error_color }};--osb-font:var(--font-{{ s.heading_font }}-family);--osb-badge-font:var(--font-{{ s.badge_font }}-family);--osb-badge-size:{{ s.badge_size }}px;">
+  <h2 class="osb-heading">{{ s.heading | escape }}</h2>
+  <div class="osb-intro" style="min-height:{{ s.intro_height | default: 48 }}px"{% if s.intro_text == blank %} aria-hidden="true"{% endif %}>
+    {% if s.intro_text != blank %}{{ s.intro_text | escape | newline_to_br }}{% endif %}
+  </div>
+  {% if request.design_mode %}
+    {% for tier_number in (1..3) %}
+      {% assign collection_key = 't' | append: tier_number | append: '_collection' %}
+      {% assign tier_collection = s[collection_key] | default: s.collection %}
+      {% if tier_collection.products_count > 50 %}<p class="osb-error">Tier {{ tier_number }} supports the first 50 products. Choose a collection with 50 or fewer single-pair products.</p>{% endif %}
+    {% endfor %}
+  {% endif %}
+  <div data-osb-tiers></div>
+  <p class="osb-status" role="status" aria-live="polite" data-osb-status></p>
+  <button type="button" class="osb-add" data-osb-add disabled>{{ s.add_text | escape }}</button>
+  <p class="osb-note">{{ s.cart_note | escape }}</p>
+  <noscript>{{ s.no_js | escape }}</noscript>
+  <script type="application/json" data-osb-config>
+    {
+      "id": {{ block.id | json }}, "currentProduct": {{ product.id | json }},
+      "currency": {{ cart.currency.iso_code | default: shop.currency | json }},
+      "locale": {{ request.locale.iso_code | json }}, "enabled": {{ s.checkout_ready | json }},
+      "settings": {{ s | json }},
+      "tierProducts": [
+      {% for tier_number in (1..3) %}
+      {% assign collection_key = 't' | append: tier_number | append: '_collection' %}
+      {% assign tier_collection = s[collection_key] | default: s.collection %}
+      [
+      {% for sock in tier_collection.products limit: 50 %}
+        {"id":{{ sock.id | json }},"title":{{ sock.title | json }},"image":{% if sock.featured_image %}{{ sock.featured_image | image_url: width: 160 | json }}{% else %}null{% endif %},
+        "options":{{ sock.options_with_values | json }},"variants":{{ sock.variants | json }}}{% unless forloop.last %},{% endunless %}
+      {% endfor %}]{% unless forloop.last %},{% endunless %}
+      {% endfor %}]
+    }
+  </script>
+</onlysocks-bundle>
