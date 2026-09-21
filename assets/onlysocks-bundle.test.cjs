@@ -24,3 +24,18 @@ assert.equal(new Set(ids).size,ids.length);
 for (const setting of block.settings.filter(s=>s.type==='range')) assert.ok(setting.default >= setting.min && setting.default <= setting.max);
 assert.equal(block.settings.find(s=>s.id==='checkout_ready').default,false);
 console.log('Passed: cheapest pairs, ties, changed selections, incomplete bundles, discounts, rounding and block schema.');
+
+const { savingsPercent } = require('./onlysocks-bundle-pricing.js');
+const automatic = calculate(prices([2000,2000,2000,2000,2000,2000]),1,25,true,true);
+assert.equal(automatic.total,10000);
+assert.equal(savingsPercent(automatic,true).toFixed(2),'16.67');
+const mixedAuto = calculate(prices([3000,1000,2500,2000,1800,2200]),1,25,true,true);
+assert.equal(mixedAuto.total,11500);
+assert.equal(savingsPercent(mixedAuto,true),8);
+assert.equal(savingsPercent(mixedAuto,false),0);
+assert.equal(savingsPercent(calculate(prices([0,0]),1,20,true,true),true),0);
+assert.equal(calculate(prices([2000,2000]),0,25,true,true).total,4000);
+assert.equal(calculate(prices([2000,2000]),1,25,true,false).total,1500);
+assert.equal(calculate(prices([2000,2000,2000,2000,2000,2000,2000,2000,2000]),2,25,true,true).total,14000);
+for (let n=1;n<=3;n++) assert.equal(block.settings.find(s=>s.id==='t'+n+'_auto_percent').default,false);
+console.log('Automatic savings checks passed: free-only pricing, mixed prices, two free pairs, manual mode and incomplete selections.');

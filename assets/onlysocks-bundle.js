@@ -17,7 +17,7 @@
         const products = this.config.tierProducts?.[n - 1] ?? this.config.products ?? [];
         const first = products.find(p => p.id === this.config.currentProduct) || products[0];
         const count = Number(this.s[`t${n}_paid`]) + Number(this.s[`t${n}_free`]);
-        return { n, products, free: Number(this.s[`t${n}_free`]), percent: Number(this.s[`t${n}_percent`]),
+        return { n, products, autoPercent: Boolean(this.s[`t${n}_auto_percent`]), free: Number(this.s[`t${n}_free`]), percent: Number(this.s[`t${n}_percent`]),
           slots: Array.from({ length: count }, (_, i) => ({ products, product: i === 0 ? first : null, choices: [], variant: null })) };
       });
       this.tiers.forEach((tier, index) => this.buildTier(tier, index));
@@ -47,7 +47,8 @@
       const toggle = this.node('button', 'osb-toggle');
       const title = this.node('span', 'osb-title', this.s[`t${tier.n}_title`]);
       const badges = this.node('span', 'osb-badges');
-      if (tier.percent) badges.append(this.node('span', 'osb-badge osb-discount', this.s.discount_text.replace('{percent}', tier.percent)));
+      tier.discountBadge = this.node('span', 'osb-badge osb-discount');
+      badges.append(tier.discountBadge);
       if (this.s[`t${tier.n}_value`]) badges.append(this.node('span', 'osb-badge osb-value', this.s.value_text));
       if (this.s[`t${tier.n}_shipping`]) badges.append(this.node('span', 'osb-badge osb-shipping', this.s.shipping_text));
       title.append(badges);
@@ -150,8 +151,12 @@
         const chosen = tier.slots.filter(slot => slot.product);
         const complete = chosen.length > 0 && chosen.every(slot => slot.variant) && (tier.n === 1 ? chosen.length >= tier.free + 1 : chosen.length === tier.slots.length);
         const prices = tier.slots.map(slot => ({ price: slot.variant ? slot.variant.price : null }));
-        const result = OnlySocksBundlePricing.calculate(prices, tier.free, tier.percent, complete);
+        const result = OnlySocksBundlePricing.calculate(prices, tier.free, tier.percent, complete, tier.autoPercent);
         tier.complete = complete; tier.result = result;
+        const discount = tier.autoPercent ? OnlySocksBundlePricing.savingsPercent(result, complete) : tier.percent;
+        const discountLabel = tier.autoPercent ? (this.s.auto_discount_text || '{percent}% off') : this.s.discount_text;
+        tier.discountBadge.hidden = !(discount > 0);
+        tier.discountBadge.textContent = discountLabel.replace('{percent}', new Intl.NumberFormat(this.config.locale, { maximumFractionDigits: 2 }).format(discount));
         tier.root.classList.toggle('is-selected', index === this.active);
         tier.toggle.setAttribute('aria-expanded', String(index === this.active)); tier.panel.hidden = index !== this.active;
         tier.price.replaceChildren();

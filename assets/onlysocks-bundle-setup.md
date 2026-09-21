@@ -45,3 +45,7 @@ Local headless Edge checks also passed for blank sizes, optional tier 1 slots, s
 References:
 - https://help.shopify.com/en/manual/discounts/discount-combinations
 - https://help.shopify.com/en/manual/discounts/discount-types/buy-x-get-y
+
+## Automatic percentage badge
+
+Each tier has a Calculate % off from free pairs toggle immediately below its manual percentage. Off preserves the existing extra-percentage discount. On ignores that manual percentage and calculates savings from the cheapest free pairs only: free value divided by all selected pairs’ original value. It does not apply that percentage again. The badge appears after all required selections are complete, updates with variant prices, and uses the editable Automatic savings badge text. No savings badge is shown when savings are zero. Shopify discount rules still need to match; disable any extra order percentage rule if you want free-pairs-only pricing at checkout.
