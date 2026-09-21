@@ -49,3 +49,7 @@ References:
 ## Automatic percentage badge
 
 Each tier has a Calculate % off from free pairs toggle immediately below its manual percentage. Off preserves the existing extra-percentage discount. On ignores that manual percentage and calculates savings from the cheapest free pairs only: free value divided by all selected pairs’ original value. It does not apply that percentage again. The badge appears after all required selections are complete, updates with variant prices, and uses the editable Automatic savings badge text. No savings badge is shown when savings are zero. Shopify discount rules still need to match; disable any extra order percentage rule if you want free-pairs-only pricing at checkout.
+
+## Auto-populate tiers 2 and 3
+
+Each fixed tier has its own Auto-populate all slots with current product switch, off by default. When enabled, all paid and free slots start with the current page product and its first available variant, selecting Size and any other options together. Customers can still change every slot. The current product must be included in that tier’s collection; otherwise the usual first-slot-only behaviour is used. If the product is sold out, styles populate but no variant is selected and ordering remains blocked. Missing Size still shows the existing error. Tier 1 is unchanged. The cart still validates inventory for the combined quantity.

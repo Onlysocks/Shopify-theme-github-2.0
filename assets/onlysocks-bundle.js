@@ -15,10 +15,19 @@
       this.status = this.querySelector('[data-osb-status]');
       this.tiers = [1, 2, 3].map(n => {
         const products = this.config.tierProducts?.[n - 1] ?? this.config.products ?? [];
-        const first = products.find(p => p.id === this.config.currentProduct) || products[0];
+        const current = products.find(p => p.id === this.config.currentProduct);
+        const first = current || products[0];
+        const autofill = n > 1 && Boolean(this.s[`t${n}_autofill`]) && current;
+        const firstVariant = autofill && current.options.some(option => option.name.trim().toLowerCase() === 'size')
+          ? current.variants.find(variant => variant.available) : null;
         const count = Number(this.s[`t${n}_paid`]) + Number(this.s[`t${n}_free`]);
         return { n, products, autoPercent: Boolean(this.s[`t${n}_auto_percent`]), free: Number(this.s[`t${n}_free`]), percent: Number(this.s[`t${n}_percent`]),
-          slots: Array.from({ length: count }, (_, i) => ({ products, product: i === 0 ? first : null, choices: [], variant: null })) };
+          slots: Array.from({ length: count }, (_, i) => ({
+            products,
+            product: autofill ? current : i === 0 ? first : null,
+            choices: firstVariant ? [...firstVariant.options] : [],
+            variant: firstVariant || null
+          })) };
       });
       this.tiers.forEach((tier, index) => this.buildTier(tier, index));
       this.button.addEventListener('click', () => this.add());
