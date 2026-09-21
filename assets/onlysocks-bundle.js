@@ -17,16 +17,14 @@
         const products = this.config.tierProducts?.[n - 1] ?? this.config.products ?? [];
         const current = products.find(p => p.id === this.config.currentProduct);
         const first = current || products[0];
-        const autofill = n > 1 && Boolean(this.s[`t${n}_autofill`]) && current;
-        const firstVariant = autofill && current.options.some(option => option.name.trim().toLowerCase() === 'size')
-          ? current.variants.find(variant => variant.available) : null;
+        const autofill = n > 1 && Boolean(this.s[`t${n}_autofill`]);
         const count = Number(this.s[`t${n}_paid`]) + Number(this.s[`t${n}_free`]);
-        return { n, products, autoPercent: Boolean(this.s[`t${n}_auto_percent`]), free: Number(this.s[`t${n}_free`]), percent: Number(this.s[`t${n}_percent`]),
+        return { n, products, current, autofill, autoPercent: Boolean(this.s[`t${n}_auto_percent`]), free: Number(this.s[`t${n}_free`]), percent: Number(this.s[`t${n}_percent`]),
           slots: Array.from({ length: count }, (_, i) => ({
             products,
-            product: autofill ? current : i === 0 ? first : null,
-            choices: firstVariant ? [...firstVariant.options] : [],
-            variant: firstVariant || null
+            product: !autofill && i === 0 ? first : null,
+            choices: [],
+            variant: null
           })) };
       });
       this.tiers.forEach((tier, index) => this.buildTier(tier, index));
@@ -66,11 +64,31 @@
       const panel = this.node('div', 'osb-slots');
       panel.id = `osb-${this.config.id}-${index}`;
       toggle.setAttribute('aria-controls', panel.id);
-      toggle.addEventListener('click', () => { if (!this.busy) { this.active = index; this.refresh(); } });
+      toggle.addEventListener('click', () => this.selectTier(index));
       root.append(toggle, panel);
       Object.assign(tier, { root, toggle, panel, price });
       tier.slots.forEach((slot, slotIndex) => this.buildSlot(tier, slot, slotIndex));
       this.querySelector('[data-osb-tiers]').append(root);
+    }
+    selectTier(index) {
+      if (this.busy || index === this.active) return;
+      const previous = this.tiers[this.active];
+      if (previous.autofill) this.populateTier(previous, false);
+      this.active = index;
+      const selected = this.tiers[index];
+      if (selected.autofill) this.populateTier(selected, true);
+      this.refresh();
+    }
+    populateTier(tier, selected) {
+      const product = selected ? tier.current : null;
+      const variant = product?.options.some(option => option.name.trim().toLowerCase() === 'size')
+        ? product.variants.find(candidate => candidate.available) : null;
+      tier.slots.forEach(slot => {
+        slot.product = product || null;
+        slot.choices = variant ? [...variant.options] : [];
+        slot.variant = variant || null;
+        this.renderControls(slot);
+      });
     }
     productButton(product) {
       const button = this.node('button', 'osb-product');
