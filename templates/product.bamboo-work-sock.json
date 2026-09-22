@@ -43,7 +43,7 @@
         "onlysocks_bundle_tHUT7W": {
           "type": "onlysocks_bundle",
           "settings": {
-            "collection": "",
+            "collection": "test-collection",
             "checkout_ready": true,
             "heading": "Build your sock bundle",
             "intro_text": "",
