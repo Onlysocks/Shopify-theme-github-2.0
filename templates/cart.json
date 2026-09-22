@@ -15,7 +15,7 @@
         "ai_gen_block_7a13ecf_XQWQQw": {
           "type": "ai_gen_block_7a13ecf",
           "settings": {
-            "threshold": 60,
+            "threshold": 100,
             "progress_message": "Spend [amount] more for free shipping!",
             "success_message": "You've unlocked free shipping!",
             "show_icon": true,
