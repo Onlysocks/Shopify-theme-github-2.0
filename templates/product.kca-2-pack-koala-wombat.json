@@ -43,7 +43,7 @@
         "onlysocks_bundle_Wb3qMA": {
           "type": "onlysocks_bundle",
           "settings": {
-            "collection": "socks-that-care",
+            "collection": "test-collection",
             "checkout_ready": true,
             "heading": "Build your sock bundle",
             "intro_text": "",
