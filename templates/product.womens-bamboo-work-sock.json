@@ -43,7 +43,7 @@
         "onlysocks_bundle_VMBiVU": {
           "type": "onlysocks_bundle",
           "settings": {
-            "collection": "work-socks",
+            "collection": "test-collection",
             "checkout_ready": true,
             "heading": "Build your sock bundle",
             "intro_text": "",
