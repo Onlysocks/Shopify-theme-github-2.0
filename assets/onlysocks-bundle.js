@@ -180,16 +180,24 @@
         const prices = tier.slots.map(slot => ({ price: slot.variant ? slot.variant.price : null }));
         const result = OnlySocksBundlePricing.calculate(prices, tier.free, tier.percent, complete, tier.autoPercent);
         tier.complete = complete; tier.result = result;
-        const discount = tier.autoPercent ? OnlySocksBundlePricing.savingsPercent(result, complete) : tier.percent;
+        // Header-only estimate: never assign preview variants to slots or cart state.
+        const previewVariant = tier.n > 1 && index !== this.active && this.s[`t${tier.n}_preview`]
+          && tier.current?.options.some(option => option.name.trim().toLowerCase() === 'size')
+          ? tier.current.variants.find(variant => variant.available) : null;
+        const headerResult = previewVariant
+          ? OnlySocksBundlePricing.calculate(tier.slots.map(() => ({ price: previewVariant.price })), tier.free, tier.percent, true, tier.autoPercent)
+          : result;
+        const headerComplete = complete || Boolean(previewVariant);
+        const discount = tier.autoPercent ? OnlySocksBundlePricing.savingsPercent(headerResult, headerComplete) : tier.percent;
         const discountLabel = tier.autoPercent ? (this.s.auto_discount_text || '{percent}% off') : this.s.discount_text;
         tier.discountBadge.hidden = !(discount > 0);
         tier.discountBadge.textContent = discountLabel.replace('{percent}', new Intl.NumberFormat(this.config.locale, { maximumFractionDigits: 2 }).format(discount));
         tier.root.classList.toggle('is-selected', index === this.active);
         tier.toggle.setAttribute('aria-expanded', String(index === this.active)); tier.panel.hidden = index !== this.active;
         tier.price.replaceChildren();
-        if (complete) {
-          if (result.original > result.total) tier.price.append(this.node('s', '', this.money(result.original)));
-          tier.price.append(this.node('strong', '', this.money(result.total)), this.node('small', '', `${this.money(result.each)} ${this.s.each_text}`));
+        if (headerComplete) {
+          if (headerResult.original > headerResult.total) tier.price.append(this.node('s', '', this.money(headerResult.original)));
+          tier.price.append(this.node('strong', '', this.money(headerResult.total)), this.node('small', '', `${this.money(headerResult.each)} ${this.s.each_text}`));
         } else tier.price.append(this.node('small', '', this.s.incomplete_price));
         tier.slots.forEach((slot, i) => {
           const free = result.free.includes(i); slot.row.classList.toggle('is-free', free); slot.badge.hidden = !free;
