@@ -12,6 +12,34 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "body"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {}
+        },
+        "inventory_4XaCm4": {
+          "type": "inventory",
+          "disabled": true,
+          "settings": {
+            "text_style": "body",
+            "inventory_threshold": 10,
+            "show_inventory_quantity": true
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
         "onlysocks_bundle_K9A4kR": {
           "type": "onlysocks_bundle",
           "settings": {
@@ -20,33 +48,41 @@
             "heading": "Build your sock bundle",
             "intro_text": "",
             "intro_height": 48,
-            "color_scheme": "background-1",
+            "color_scheme": "accent-2",
             "t1_collection": "",
             "t1_title": "Choose 1–4 pairs",
             "t1_paid": 4,
             "t1_free": 0,
             "t1_percent": 0,
+            "t1_auto_percent": false,
             "t1_value": false,
             "t1_shipping": false,
             "t2_collection": "",
+            "t2_autofill": true,
+            "t2_preview": true,
             "t2_title": "5 + 1 free",
             "t2_paid": 5,
             "t2_free": 1,
             "t2_percent": 15,
+            "t2_auto_percent": true,
             "t2_value": true,
             "t2_shipping": true,
             "t3_collection": "",
+            "t3_autofill": true,
+            "t3_preview": true,
             "t3_title": "7 + 2 free",
             "t3_paid": 7,
             "t3_free": 2,
             "t3_percent": 20,
+            "t3_auto_percent": true,
             "t3_value": false,
-            "t3_shipping": false,
+            "t3_shipping": true,
             "choose_style": "Choose your favourite style",
             "choose_option": "Choose {option}",
             "pair_text": "Pair {number}",
             "free_text": "Free pair",
             "discount_text": "{percent}% off",
+            "auto_discount_text": "{percent}% off",
             "value_text": "Best value",
             "shipping_text": "Free delivery",
             "each_text": "per pair",
@@ -84,35 +120,6 @@
             "free_border": "#d0e4cb",
             "error_color": "#b42318"
           }
-        },
-        "vendor": {
-          "type": "text",
-          "settings": {
-            "text": "{{ product.vendor }}",
-            "text_style": "body"
-          }
-        },
-        "title": {
-          "type": "title",
-          "settings": {}
-        },
-        "rating": {
-          "type": "rating",
-          "disabled": true,
-          "settings": {}
-        },
-        "inventory_4XaCm4": {
-          "type": "inventory",
-          "disabled": true,
-          "settings": {
-            "text_style": "body",
-            "inventory_threshold": 10,
-            "show_inventory_quantity": true
-          }
-        },
-        "price": {
-          "type": "price",
-          "settings": {}
         },
         "variant_picker": {
           "type": "variant_picker",
@@ -171,12 +178,12 @@
         }
       },
       "block_order": [
-        "onlysocks_bundle_K9A4kR",
         "vendor",
         "title",
         "rating",
         "inventory_4XaCm4",
         "price",
+        "onlysocks_bundle_K9A4kR",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
