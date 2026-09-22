@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -32,22 +41,102 @@
           "type": "price",
           "settings": {}
         },
+        "onlysocks_bundle_t8WtaF": {
+          "type": "onlysocks_bundle",
+          "settings": {
+            "collection": "test-collection",
+            "checkout_ready": true,
+            "heading": "Build your sock bundle",
+            "intro_text": "",
+            "intro_height": 48,
+            "color_scheme": "background-1",
+            "t1_collection": "",
+            "t1_title": "Choose 1–4 pairs",
+            "t1_paid": 4,
+            "t1_free": 0,
+            "t1_percent": 0,
+            "t1_auto_percent": false,
+            "t1_value": false,
+            "t1_shipping": false,
+            "t2_collection": "",
+            "t2_autofill": false,
+            "t2_preview": false,
+            "t2_title": "5 + 1 free",
+            "t2_paid": 5,
+            "t2_free": 1,
+            "t2_percent": 15,
+            "t2_auto_percent": false,
+            "t2_value": true,
+            "t2_shipping": true,
+            "t3_collection": "",
+            "t3_autofill": false,
+            "t3_preview": false,
+            "t3_title": "7 + 2 free",
+            "t3_paid": 7,
+            "t3_free": 2,
+            "t3_percent": 20,
+            "t3_auto_percent": false,
+            "t3_value": false,
+            "t3_shipping": true,
+            "choose_style": "Choose your favourite style",
+            "choose_option": "Choose {option}",
+            "pair_text": "Pair {number}",
+            "free_text": "Free pair",
+            "discount_text": "{percent}% off paid pairs",
+            "auto_discount_text": "{percent}% off",
+            "value_text": "Best value",
+            "shipping_text": "Free delivery",
+            "each_text": "per pair",
+            "remove_text": "Remove pair",
+            "sold_out": "Sold out",
+            "size_error": "Error size not found",
+            "add_text": "Add to cart",
+            "adding_text": "Adding your socks…",
+            "incomplete_price": "Choose styles and sizes",
+            "selection_text": "Choose a size for every selected pair. Complete all slots in a fixed bundle.",
+            "ready_text": "Your cheapest eligible pairs are highlighted automatically.",
+            "empty_text": "No socks available in this collection yet.",
+            "setup_text": "Bundle ordering is coming soon.",
+            "cart_error": "We could not add your socks. Please try again.",
+            "no_js": "Please enable JavaScript to build your bundle.",
+            "cart_note": "Bundle estimate. Discounts are calculated in your cart; other items or offers may change the final savings.",
+            "heading_font": "heading",
+            "badge_font": "heading",
+            "badge_size": 11,
+            "radius": 4,
+            "accent": "#203c35",
+            "border": "#d5dad6",
+            "heading_bg": "#203c35",
+            "heading_fg": "#ffffff",
+            "button_bg": "#203c35",
+            "button_fg": "#ffffff",
+            "value_bg": "#203c35",
+            "value_fg": "#ffffff",
+            "discount_bg": "#eff4ef",
+            "discount_fg": "#203c35",
+            "shipping_bg": "#eff4ef",
+            "shipping_fg": "#203c35",
+            "free_bg": "#eff4ef",
+            "free_fg": "#203c35",
+            "free_border": "#d0e4cb",
+            "error_color": "#b42318"
+          }
+        },
         "variant_picker": {
           "type": "variant_picker",
+          "disabled": true,
           "settings": {
             "picker_type": "button"
           }
         },
         "quantity_selector": {
           "type": "quantity_selector",
-          "settings": {}
-        },
-        "amai_preorder_manager_notify_preorder_button_block_bTQ863": {
-          "type": "shopify://apps/amai-preorder-manager-notify/blocks/preorder-button-block/7053ce2a-18da-4e24-98b3-3fdd20b313e7",
+          "disabled": true,
           "settings": {}
         },
         "buy_buttons": {
           "type": "buy_buttons",
+          "disabled": true,
           "settings": {
             "show_dynamic_checkout": true,
             "show_gift_card_recipient": true
@@ -89,74 +178,6 @@
           "settings": {
             "share_label": "Share"
           }
-        },
-        "onlysocks_bundle_t8WtaF": {
-          "type": "onlysocks_bundle",
-          "settings": {
-            "collection": "test-collection",
-            "checkout_ready": true,
-            "heading": "Build your sock bundle",
-            "color_scheme": "background-1",
-            "t1_title": "Choose 1–4 pairs",
-            "t1_paid": 4,
-            "t1_free": 0,
-            "t1_percent": 0,
-            "t1_value": false,
-            "t1_shipping": false,
-            "t2_title": "5 + 1 free",
-            "t2_paid": 5,
-            "t2_free": 1,
-            "t2_percent": 15,
-            "t2_value": true,
-            "t2_shipping": true,
-            "t3_title": "7 + 2 free",
-            "t3_paid": 7,
-            "t3_free": 2,
-            "t3_percent": 20,
-            "t3_value": false,
-            "t3_shipping": true,
-            "choose_style": "Choose your favourite style",
-            "choose_option": "Choose {option}",
-            "pair_text": "Pair {number}",
-            "free_text": "Free pair",
-            "discount_text": "{percent}% off paid pairs",
-            "value_text": "Best value",
-            "shipping_text": "Free delivery",
-            "each_text": "per pair",
-            "remove_text": "Remove pair",
-            "sold_out": "Sold out",
-            "size_error": "Error size not found",
-            "add_text": "Add to cart",
-            "adding_text": "Adding your socks…",
-            "incomplete_price": "Choose styles and sizes",
-            "selection_text": "Choose a size for every selected pair. Complete all slots in a fixed bundle.",
-            "ready_text": "Your cheapest eligible pairs are highlighted automatically.",
-            "empty_text": "No socks available in this collection yet.",
-            "setup_text": "Bundle ordering is coming soon.",
-            "cart_error": "We could not add your socks. Please try again.",
-            "no_js": "Please enable JavaScript to build your bundle.",
-            "cart_note": "Bundle estimate. Discounts are calculated in your cart; other items or offers may change the final savings.",
-            "heading_font": "heading",
-            "badge_font": "heading",
-            "badge_size": 11,
-            "radius": 4,
-            "accent": "#203c35",
-            "border": "#d5dad6",
-            "heading_bg": "#203c35",
-            "heading_fg": "#ffffff",
-            "button_bg": "#203c35",
-            "button_fg": "#ffffff",
-            "value_bg": "#203c35",
-            "value_fg": "#ffffff",
-            "discount_bg": "#eff4ef",
-            "discount_fg": "#203c35",
-            "shipping_bg": "#eff4ef",
-            "shipping_fg": "#203c35",
-            "free_bg": "#eff4ef",
-            "free_fg": "#203c35",
-            "free_border": "#d0e4cb",
-            "error_color": "#b42318"
-          }
         }
       },
       "block_order": [
@@ -164,11 +185,10 @@
         "title",
         "rating",
         "inventory_4XaCm4",
-        "onlysocks_bundle_t8WtaF",
         "price",
+        "onlysocks_bundle_t8WtaF",
         "variant_picker",
         "quantity_selector",
-        "amai_preorder_manager_notify_preorder_button_block_bTQ863",
         "buy_buttons",
         "description",
         "collapsible_tab_chPRQM",
@@ -215,7 +235,12 @@
       "blocks": {
         "judge_me_reviews_review_widget_PzfkNg": {
           "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
         }
       },
       "block_order": [
