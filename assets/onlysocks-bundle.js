@@ -166,12 +166,37 @@
         select.setAttribute('aria-invalid', String(missingSize));
         select.addEventListener('change', () => {
           slot.choices[optionIndex] = select.value;
-          slot.variant = product.variants.find(v => v.available && product.options.every((_, i) => v.options[i] === slot.choices[i])) || null;
-          this.renderControls(slot); this.refresh(); slot.controls.querySelectorAll('select')[optionIndex].focus();
+          this.updateVariantControls(slot);
+          this.refresh();
         });
         label.append(select); options.append(label);
       });
       slot.controls.append(options);
+    }
+    updateVariantControls(slot) {
+      const product = slot.product;
+      const sizeIndex = product.options.findIndex(option => option.name.trim().toLowerCase() === 'size');
+      const availableSizes = [...new Set(product.variants
+        .filter(variant => variant.available && slot.choices.every((picked, i) => i === sizeIndex || !picked || variant.options[i] === picked))
+        .map(variant => variant.options[sizeIndex]))];
+      if (availableSizes.length === 1) slot.choices[sizeIndex] = availableSizes[0];
+      else if (!availableSizes.includes(slot.choices[sizeIndex])) slot.choices[sizeIndex] = '';
+      slot.variant = product.variants.find(variant => variant.available && product.options.every((_, i) => variant.options[i] === slot.choices[i])) || null;
+      // Preserve native select elements and focus while the mobile picker closes.
+      slot.controls.querySelectorAll('select').forEach((select, optionIndex) => {
+        Array.from(select.options).slice(1).forEach(entry => {
+          const available = product.variants.some(variant => variant.available && variant.options[optionIndex] === entry.value
+            && slot.choices.every((picked, i) => i === optionIndex || !picked || variant.options[i] === picked));
+          entry.disabled = !available;
+          const label = entry.value + (available ? '' : ` — ${this.s.sold_out}`);
+          if (entry.textContent !== label) entry.textContent = label;
+        });
+        const value = slot.choices[optionIndex] || '';
+        if (select.value !== value) select.value = value;
+        const missingSize = optionIndex === sizeIndex && !value;
+        select.classList.toggle('osb-size--missing', missingSize);
+        select.setAttribute('aria-invalid', String(missingSize));
+      });
     }
     refresh() {
       this.tiers.forEach((tier, index) => {
