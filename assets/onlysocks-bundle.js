@@ -8,7 +8,7 @@
       this.initialized = true;
       this.config = JSON.parse(config.textContent);
       this.s = this.config.settings;
-      this.active = 0;
+      this.active = -1;
       this.busy = false;
       this.money = cents => new Intl.NumberFormat(this.config.locale, { style: 'currency', currency: this.config.currency }).format(cents / 100);
       this.button = this.querySelector('[data-osb-add]');
@@ -73,7 +73,7 @@
     selectTier(index) {
       if (this.busy || index === this.active) return;
       const previous = this.tiers[this.active];
-      if (previous.autofill) this.populateTier(previous, false);
+      if (previous?.autofill) this.populateTier(previous, false);
       this.active = index;
       const selected = this.tiers[index];
       if (selected.autofill) this.populateTier(selected, true);
@@ -273,11 +273,11 @@
         const result = OnlySocksBundlePricing.calculate(prices, tier.free, tier.percent, complete, tier.autoPercent);
         tier.complete = complete; tier.result = result;
         // Header-only estimate: never assign preview variants to slots or cart state.
-        const previewVariant = tier.n > 1 && index !== this.active && this.s[`t${tier.n}_preview`]
+        const previewVariant = index !== this.active && ((tier.n === 1 && !complete) || (tier.n > 1 && this.s[`t${tier.n}_preview`]))
           && tier.current?.options.some(option => option.name.trim().toLowerCase() === 'size')
           ? tier.current.variants.find(variant => variant.available) : null;
         const headerResult = previewVariant
-          ? OnlySocksBundlePricing.calculate(tier.slots.map(() => ({ price: previewVariant.price })), tier.free, tier.percent, true, tier.autoPercent)
+          ? OnlySocksBundlePricing.calculate(Array.from({ length: tier.n === 1 ? Math.max(1, chosen.length) : tier.slots.length }, () => ({ price: previewVariant.price })), tier.n === 1 ? Math.min(tier.free, Math.max(0, chosen.length - 1)) : tier.free, tier.percent, true, tier.autoPercent)
           : result;
         const headerComplete = complete || Boolean(previewVariant);
         const discount = tier.autoPercent ? OnlySocksBundlePricing.savingsPercent(headerResult, headerComplete) : tier.percent;
@@ -297,13 +297,19 @@
         });
       });
       const tier = this.tiers[this.active];
+      if (!tier) {
+        this.button.disabled = true;
+        this.button.textContent = this.s.add_text;
+        this.status.textContent = '';
+        return;
+      }
       this.button.disabled = this.busy || !tier.complete || !this.config.enabled;
       this.button.textContent = this.busy ? this.s.adding_text : this.s.add_text + (tier.complete ? ` · ${this.money(tier.result.total)}` : '');
       this.status.textContent = !tier.products.length ? this.s.empty_text : !this.config.enabled ? this.s.setup_text : !tier.complete ? this.s.selection_text : this.s.ready_text;
     }
     async add() {
       const tier = this.tiers[this.active];
-      if (this.busy || !tier.complete || !this.config.enabled) return;
+      if (this.busy || !tier?.complete || !this.config.enabled) return;
       const items = [];
       tier.slots.filter(slot => slot.variant).forEach(slot => {
         const existing = items.find(item => item.id === slot.variant.id);
