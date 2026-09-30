@@ -85,7 +85,7 @@
         ? product.variants.find(candidate => candidate.available) : null;
       tier.slots.forEach(slot => {
         slot.product = product || null;
-        slot.sizeEdited = false;
+        slot.sizeEdited = false; slot.colourEdited = false;
         slot.choices = variant ? [...variant.options] : [];
         slot.variant = variant || null;
         this.renderControls(slot);
@@ -125,8 +125,8 @@
       slot.products.forEach(product => {
         const choice = this.productButton(product);
         choice.addEventListener('click', () => {
-          slot.product = product; slot.choices = []; slot.variant = null; slot.sizeEdited = false;
-          this.renderControls(slot); this.shareFirstSize(slot); this.refresh(); slot.controls.querySelector('button').focus();
+          slot.product = product; slot.choices = []; slot.variant = null; slot.sizeEdited = false; slot.colourEdited = false;
+          this.renderControls(slot); this.shareFirstOptions(slot); this.refresh(); slot.controls.querySelector('button').focus();
         }); menu.append(choice);
       });
       trigger.addEventListener('click', () => {
@@ -147,6 +147,7 @@
         const firstSizeIndex = first?.product?.options.findIndex(option => option.name.trim().toLowerCase() === 'size');
         const preferred = first && first !== slot && firstSizeIndex >= 0 ? first.choices[firstSizeIndex] : null;
         this.defaultProductOptions(slot, preferred);
+        if (first && first !== slot) this.inheritOptions(slot, first);
       }
       const availableSizes = [...new Set(product.variants
         .filter(variant => variant.available && slot.choices.every((picked, i) => i === sizeIndex || !picked || variant.options[i] === picked))
@@ -175,8 +176,9 @@
         select.addEventListener('change', () => {
           slot.choices[optionIndex] = select.value;
           if (optionIndex === sizeIndex) slot.sizeEdited = true;
+          if (/^(colour|color)$/i.test(option.name.trim())) slot.colourEdited = true;
           this.updateVariantControls(slot);
-          this.shareFirstSize(slot);
+          this.shareFirstOptions(slot);
           this.refresh();
         });
         label.append(select); options.append(label);
@@ -197,15 +199,37 @@
       if (matching.length) slot.choices[sizeIndex] = preferredSize;
       if (colourIndex >= 0 && (!slot.choices[colourIndex] || matching.length)) slot.choices[colourIndex] = variant.options[colourIndex];
     }
-    shareFirstSize(slot) {
+    inheritOptions(slot, first) {
+      if (!slot.product || !first.product) return;
+      const indexOf = (product, pattern) => product.options.findIndex(option => pattern.test(option.name.trim()));
+      const sizeIndex = indexOf(slot.product, /^size$/i);
+      const colourIndex = indexOf(slot.product, /^(colour|color)$/i);
+      if (sizeIndex < 0) return;
+      const size = first.choices[indexOf(first.product, /^size$/i)];
+      const colour = first.choices[indexOf(first.product, /^(colour|color)$/i)];
+      const candidates = slot.product.variants.filter(variant => variant.available && slot.product.options.every((_, i) => {
+        if (i === sizeIndex && !slot.sizeEdited) return true;
+        if (i === colourIndex && !slot.colourEdited) return true;
+        return !slot.choices[i] || variant.options[i] === slot.choices[i];
+      }));
+      let sized = candidates.filter(variant => variant.options[sizeIndex] === slot.choices[sizeIndex]);
+      if (!slot.sizeEdited && size) {
+        const matches = candidates.filter(variant => variant.options[sizeIndex] === size);
+        if (matches.length) { slot.choices[sizeIndex] = size; sized = matches; }
+      }
+      if (!slot.choices[sizeIndex]) sized = candidates;
+      if (colourIndex >= 0 && !slot.colourEdited) {
+        const matchingColour = colour && sized.find(variant => variant.options[colourIndex] === colour);
+        const variant = matchingColour || sized.find(variant => variant.options[colourIndex] === slot.choices[colourIndex]) || sized[0];
+        if (variant) slot.choices[colourIndex] = variant.options[colourIndex];
+      }
+    }
+    shareFirstOptions(slot) {
       const tier = this.tiers.find(candidate => candidate.slots[0] === slot);
       if (!tier || !slot.product) return;
-      const sizeIndex = slot.product.options.findIndex(option => option.name.trim().toLowerCase() === 'size');
-      const size = slot.choices[sizeIndex];
-      if (!size) return;
       tier.slots.slice(1).forEach(other => {
-        if (!other.product || other.sizeEdited) return;
-        this.defaultProductOptions(other, size);
+        if (!other.product) return;
+        this.inheritOptions(other, slot);
         this.updateVariantControls(other);
       });
     }
