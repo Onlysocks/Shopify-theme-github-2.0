@@ -77,6 +77,12 @@
       this.active = index;
       const selected = this.tiers[index];
       if (selected.autofill) this.populateTier(selected, true);
+      if (index > 0 && selected.slots[0]?.product) {
+        const first = selected.slots[0];
+        this.inheritOptions(first, this.tiers[0].slots[0]);
+        this.updateVariantControls(first);
+        this.shareFirstOptions(first);
+      }
       this.refresh();
     }
     populateTier(tier, selected) {
@@ -143,7 +149,8 @@
       if (sizeIndex < 0) { slot.error.textContent = this.s.size_error; return; }
       if (!slot.choices.some(Boolean)) {
         const tier = this.tiers.find(candidate => candidate.slots.includes(slot));
-        const first = tier?.slots[0];
+        const first = tier?.n > 1 && tier.slots[0] === slot
+          ? this.tiers[0].slots[0] : tier?.slots[0];
         const firstSizeIndex = first?.product?.options.findIndex(option => option.name.trim().toLowerCase() === 'size');
         const preferred = first && first !== slot && firstSizeIndex >= 0 ? first.choices[firstSizeIndex] : null;
         this.defaultProductOptions(slot, preferred);
