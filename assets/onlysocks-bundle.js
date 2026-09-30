@@ -85,6 +85,7 @@
         ? product.variants.find(candidate => candidate.available) : null;
       tier.slots.forEach(slot => {
         slot.product = product || null;
+        slot.sizeEdited = false;
         slot.choices = variant ? [...variant.options] : [];
         slot.variant = variant || null;
         this.renderControls(slot);
@@ -124,8 +125,8 @@
       slot.products.forEach(product => {
         const choice = this.productButton(product);
         choice.addEventListener('click', () => {
-          slot.product = product; slot.choices = []; slot.variant = null;
-          this.renderControls(slot); this.refresh(); slot.controls.querySelector('button').focus();
+          slot.product = product; slot.choices = []; slot.variant = null; slot.sizeEdited = false;
+          this.renderControls(slot); this.shareFirstSize(slot); this.refresh(); slot.controls.querySelector('button').focus();
         }); menu.append(choice);
       });
       trigger.addEventListener('click', () => {
@@ -140,6 +141,13 @@
       if (!product) return;
       const sizeIndex = product.options.findIndex(o => o.name.trim().toLowerCase() === 'size');
       if (sizeIndex < 0) { slot.error.textContent = this.s.size_error; return; }
+      if (!slot.choices.some(Boolean)) {
+        const tier = this.tiers.find(candidate => candidate.slots.includes(slot));
+        const first = tier?.slots[0];
+        const firstSizeIndex = first?.product?.options.findIndex(option => option.name.trim().toLowerCase() === 'size');
+        const preferred = first && first !== slot && firstSizeIndex >= 0 ? first.choices[firstSizeIndex] : null;
+        this.defaultProductOptions(slot, preferred);
+      }
       const availableSizes = [...new Set(product.variants
         .filter(variant => variant.available && slot.choices.every((picked, i) => i === sizeIndex || !picked || variant.options[i] === picked))
         .map(variant => variant.options[sizeIndex]))];
@@ -166,12 +174,40 @@
         select.setAttribute('aria-invalid', String(missingSize));
         select.addEventListener('change', () => {
           slot.choices[optionIndex] = select.value;
+          if (optionIndex === sizeIndex) slot.sizeEdited = true;
           this.updateVariantControls(slot);
+          this.shareFirstSize(slot);
           this.refresh();
         });
         label.append(select); options.append(label);
       });
       slot.controls.append(options);
+    }
+    defaultProductOptions(slot, preferredSize) {
+      const product = slot.product;
+      if (!product) return;
+      const sizeIndex = product.options.findIndex(option => option.name.trim().toLowerCase() === 'size');
+      const colourIndex = product.options.findIndex(option => /^(colour|color)$/i.test(option.name.trim()));
+      if (sizeIndex < 0) return;
+      const available = product.variants.filter(variant => variant.available);
+      const matching = preferredSize ? available.filter(variant => variant.options[sizeIndex] === preferredSize) : [];
+      const candidates = matching.length ? matching : available;
+      const variant = candidates.find(candidate => product.options.every((_, i) => i === sizeIndex || !slot.choices[i] || candidate.options[i] === slot.choices[i])) || candidates[0];
+      if (!variant) return;
+      if (matching.length) slot.choices[sizeIndex] = preferredSize;
+      if (colourIndex >= 0 && (!slot.choices[colourIndex] || matching.length)) slot.choices[colourIndex] = variant.options[colourIndex];
+    }
+    shareFirstSize(slot) {
+      const tier = this.tiers.find(candidate => candidate.slots[0] === slot);
+      if (!tier || !slot.product) return;
+      const sizeIndex = slot.product.options.findIndex(option => option.name.trim().toLowerCase() === 'size');
+      const size = slot.choices[sizeIndex];
+      if (!size) return;
+      tier.slots.slice(1).forEach(other => {
+        if (!other.product || other.sizeEdited) return;
+        this.defaultProductOptions(other, size);
+        this.updateVariantControls(other);
+      });
     }
     updateVariantControls(slot) {
       const product = slot.product;
