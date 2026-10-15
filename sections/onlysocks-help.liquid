@@ -1,0 +1,69 @@
+<section class="os-section color-{{ section.settings.color_scheme }} gradient" aria-labelledby="Help-{{ section.id }}"><div class="page-width os-help"><div><p class="os-eyebrow">{{ section.settings.eyebrow | escape }}</p><h2 id="Help-{{ section.id }}">{{ section.settings.heading | escape }}</h2><div class="rte">{{ section.settings.text }}</div>{% if section.settings.link != blank %}<a class="os-text-link" href="{{ section.settings.link }}">{{ section.settings.label | escape }} <span aria-hidden="true">↗</span></a>{% endif %}</div><div>{% for block in section.blocks %}<details class="os-faq" {{ block.shopify_attributes }}><summary>{{ block.settings.question | escape }}<span aria-hidden="true">+</span></summary><div class="rte">{{ block.settings.answer }}</div></details>{% endfor %}</div></div></section>
+{% schema %}
+{
+  "name": "Only Socks — answers",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colours",
+      "default": "inverse"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "A GOOD FIT STARTS HERE"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A few helpful answers."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Introduction",
+      "default": "<p>Choose your next pair with confidence.</p>"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Contact label",
+      "default": "Ask us a question"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Contact link"
+    }
+  ],
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "answer",
+      "name": "Question and answer",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Which socks should I choose?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Explore our range and check each product for materials, sizing and care.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Only Socks — answers"
+    }
+  ]
+}
+{% endschema %}

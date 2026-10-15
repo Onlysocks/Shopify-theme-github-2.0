@@ -1,0 +1,3 @@
+{% if request.page_type == 'product' or request.page_type == 'collection' %}
+<nav class="os-breadcrumb page-width" aria-label="{{ 'general.breadcrumbs.label' | t }}"><ol><li><a href="{{ routes.root_url }}">{{ 'general.breadcrumbs.home' | t }}</a></li>{% if request.page_type == 'product' %}{% if collection %}<li><a href="{{ collection.url }}">{{ collection.title | escape }}</a></li>{% endif %}<li aria-current="page">{{ product.title | escape }}</li>{% else %}<li aria-current="page">{{ collection.title | escape }}</li>{% endif %}</ol></nav>
+{% endif %}

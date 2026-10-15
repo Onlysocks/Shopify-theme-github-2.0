@@ -31,9 +31,20 @@
       {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
-    {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}">
-    {% endif %}
+    {% liquid
+      assign seo_description = page_description
+      if seo_description == blank
+        case request.page_type
+          when 'product'
+            assign seo_description = product.description | strip_html | strip_newlines | truncate: 155
+          when 'collection'
+            assign seo_description = collection.description | strip_html | strip_newlines | truncate: 155
+          when 'index'
+            assign seo_description = shop.description
+        endcase
+      endif
+    %}
+    {% if seo_description != blank %}<meta name="description" content="{{ seo_description | escape }}">{% endif %}
 
     {% render 'meta-tags' %}
 
@@ -261,6 +272,7 @@
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'onlysocks-redesign.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -293,7 +305,7 @@
   {% render 'shogun-head' %}
 </head>
 
-  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+  <body class="{% if settings.os_redesign %}os-store {% endif %}gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
     <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-ML9W6M78"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>

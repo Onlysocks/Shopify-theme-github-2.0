@@ -1,1 +1,89 @@
-{"name":"t:sections.footer.name","type":"footer","sections":{"newsletter_GjyaKe":{"type":"newsletter","blocks":{"heading_3X48VE":{"type":"heading","settings":{"heading":"Subscribe to our emails","heading_size":"h1"}},"paragraph_pTKTmj":{"type":"paragraph","settings":{"text":"<p>Be the first to know about new collections and exclusive offers.<\/p>"}},"email_form_XkjMwj":{"type":"email_form","settings":{}}},"block_order":["heading_3X48VE","paragraph_pTKTmj","email_form_XkjMwj"],"name":"t:sections.newsletter.presets.name","settings":{"color_scheme":"background-1","full_width":true,"padding_top":40,"padding_bottom":0}},"footer":{"type":"footer","settings":{"color_scheme":"scheme-9ea9d3b9-98d2-4aef-8fd3-a21705d89aae","newsletter_enable":false,"newsletter_heading":"Join our email list! No Spam, Just Announcements on Restocks and new Products.","enable_follow_on_shop":false,"show_social":true,"enable_country_selector":false,"enable_language_selector":true,"payment_enable":true,"show_policy":true,"margin_top":8,"padding_top":8,"padding_bottom":16}}},"order":["newsletter_GjyaKe","footer"]}
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "newsletter_GjyaKe": {
+      "type": "newsletter",
+      "blocks": {
+        "heading_3X48VE": {
+          "type": "heading",
+          "settings": {
+            "heading": "Good things for your sock drawer.",
+            "heading_size": "h1"
+          }
+        },
+        "paragraph_pTKTmj": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>New socks, restocks and the occasional good offer. Straight to your inbox.</p>"
+          }
+        },
+        "email_form_XkjMwj": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading_3X48VE",
+        "paragraph_pTKTmj",
+        "email_form_XkjMwj"
+      ],
+      "name": "t:sections.newsletter.presets.name",
+      "settings": {
+        "color_scheme": "inverse",
+        "full_width": true,
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "color_scheme": "os-forest",
+        "newsletter_enable": false,
+        "newsletter_heading": "Join our email list! No Spam, Just Announcements on Restocks and new Products.",
+        "enable_follow_on_shop": false,
+        "show_social": true,
+        "enable_country_selector": false,
+        "enable_language_selector": true,
+        "payment_enable": true,
+        "show_policy": true,
+        "margin_top": 0,
+        "padding_top": 48,
+        "padding_bottom": 32
+      },
+      "blocks": {
+        "os_shop": {
+          "type": "text",
+          "settings": {
+            "heading": "Find your pair",
+            "subtext": "<p><a href=\"/collections/australian-made-work-socks\">Work socks</a><br/><a href=\"/products/elite_cotton_socks\">Everyday socks</a><br/><a href=\"/collections/socks-that-care\">Wildlife socks</a><br/><a href=\"/collections/factory-seconds\">Factory seconds</a></p>"
+          }
+        },
+        "os_help": {
+          "type": "text",
+          "settings": {
+            "heading": "Here to help",
+            "subtext": "<p><a href=\"/pages/contact\">Contact us</a><br/><a href=\"/policies/shipping-policy\">Delivery information</a><br/><a href=\"/policies/refund-policy\">Returns</a><br/><a href=\"/pages/true-blue-unconditional-lifetime-guarantee\">Merino lifetime guarantee</a></p>"
+          }
+        },
+        "os_story": {
+          "type": "text",
+          "settings": {
+            "heading": "Only Socks. Aussie made.",
+            "subtext": "<p>Good socks for workdays, weekends and everything in between.</p><p><a href=\"/pages/about-us\">Our story</a><br/><a href=\"/pages/become-a-stockist\">Become a stockist</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "os_shop",
+        "os_help",
+        "os_story"
+      ]
+    }
+  },
+  "order": [
+    "newsletter_GjyaKe",
+    "footer"
+  ]
+}

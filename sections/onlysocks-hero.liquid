@@ -1,0 +1,123 @@
+<section class="os-hero color-{{ section.settings.color_scheme }} gradient" aria-labelledby="HeroTitle-{{ section.id }}">
+  <div class="os-hero__copy">
+    <p class="os-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    <h1 id="HeroTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h1>
+    <div class="os-intro rte">{{ section.settings.text }}</div>
+    <div class="os-actions">
+      {% if section.settings.link != blank %}<a class="button" href="{{ section.settings.link }}">{{ section.settings.label | escape }}</a>{% endif %}
+      {% if section.settings.secondary_link != blank %}<a class="os-text-link" href="{{ section.settings.secondary_link }}">{{ section.settings.secondary_label | escape }} <span aria-hidden="true">↗</span></a>{% endif %}
+    </div>
+    <p class="os-hero__note">{{ section.settings.note | escape }}</p>
+  </div>
+  <div class="os-hero__media">
+    {% if section.settings.image != blank %}
+      {% assign photo_alt = section.settings.image.alt | default: section.settings.heading %}{{ section.settings.image | image_url: width: 2000 | image_tag: widths: '480,750,1100,1500,2000', sizes: '(min-width: 990px) 56vw, 100vw', loading: 'eager', fetchpriority: 'high', class: 'os-cover', alt: photo_alt }}
+    {% else %}{{ 'lifestyle-1' | placeholder_svg_tag: 'os-cover placeholder-svg' }}{% endif %}
+    {% if section.settings.caption != blank %}<span class="os-photo-caption">{{ section.settings.caption | escape }}</span>{% endif %}
+  </div>
+</section>
+<div class="os-proof color-{{ section.settings.color_scheme }}">
+  {% for block in section.blocks %}<div {{ block.shopify_attributes }}><strong>{{ block.settings.title | escape }}</strong><span>{{ block.settings.text | escape }}</span></div>{% endfor %}
+</div>
+{% schema %}
+{
+  "name": "Only Socks — hero",
+  "limit": 1,
+  "enabled_on": {
+    "templates": [
+      "index"
+    ]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Colours",
+      "default": "inverse"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "AUSTRALIAN MADE. EVERYDAY READY."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main heading",
+      "default": "Hard-working socks. Happy feet."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Introduction",
+      "default": "<p>From early starts to well-earned weekends. Discover Australian made work socks in Merino wool and bamboo.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Main photograph"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Button label",
+      "default": "Shop work socks"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Second link label",
+      "default": "Find your everyday pair"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Second link"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Small note",
+      "default": "Good socks. Made here."
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Photo caption",
+      "default": "MADE FOR DAYS ON YOUR FEET"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "proof",
+      "name": "Reassurance",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Australian made"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Local quality, every day"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Only Socks — hero"
+    }
+  ]
+}
+{% endschema %}

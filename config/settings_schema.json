@@ -1465,5 +1465,20 @@
         "default": "background-1"
       }
     ]
+  },
+  {
+    "name": "Only Socks storefront",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "os_redesign",
+        "label": "Enable refined storefront styles",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "Homepage imagery and wording are editable in the Only Socks sections. Colours and fonts use the standard theme settings."
+      }
+    ]
   }
 ]
